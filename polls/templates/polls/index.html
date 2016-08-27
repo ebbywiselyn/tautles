@@ -1,6 +1,22 @@
 {% load static %}
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.css">
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+<script src="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.js"></script>
+
+{% if user.is_authenticated %}
+<div class="top-bar">
+  <span class="success label">Welcome {{ user.username }}</span>
+  <div class="top-bar-right">
+    <ul class="menu">
+      <a href="{% url 'polls:logout' %}">logout</a>      
+    </ul>
+  </div>  
+</div>
+
+{% else %}
+<p>Please <a href="{% url 'polls:login' %}"> Login </a> to personalize this experience</p>
+{% endif %}
 
 {% if latest_questions_list %}
 <ul>
@@ -9,12 +25,8 @@
     {% endfor %}
 </ul>
 {% else %}
-<p>I don't want to talk to you today</p>
+<div class="callout alert">
+  <p>I don't want to talk to you today</p>
+</div>
 {% endif %}
 
-{% if user.is_authenticated %}
-<p> You are logged in as {{ user.username }}</p>
-<a href="{% url 'polls:logout' %}">logout</a>
-{% else %}
-<p>Please <a href="{% url 'polls:login' %}"> Login </a> to personalize this experience</p>
-{% endif %}
