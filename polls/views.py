@@ -1,12 +1,11 @@
-from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from .models import Question
-from .models import Choice
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404
+from polls.models import Question
+from polls.models import Choice
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib.auth import logout
 
 
 class IndexView(generic.ListView):
@@ -43,10 +42,15 @@ def vote(request, question_id):
         )
 
 
+def logout_view(request):
+    logout(request)
+    return redirect('/')
+
+
+def logout_success_view(request):
+    return render(request, 'polls/logout_success.html')
+
+
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
-
-
-def logout(request):
-    return HttpResponse('You have successfully logged out!')
