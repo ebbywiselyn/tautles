@@ -1,7 +1,6 @@
 {% load static %}
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.css">
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
 <script src="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.js"></script>
 
 {% if user.is_authenticated %}
@@ -15,18 +14,34 @@
 </div>
 
 {% else %}
-<p>Please <a href="{% url 'polls:login' %}"> Login </a> to personalize this experience</p>
+<div class="callout">
+  <p><a href="{% url 'polls:login' %}"> Login </a> to personalize this experience</p>
+</div>
 {% endif %}
 
 {% if latest_questions_list %}
 <ul>
-    {% for question in latest_questions_list %}
-    <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
+  {% for question in latest_questions_list %}
+  <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+  {% endfor %}
 </ul>
 {% else %}
-<div class="callout alert">
-  <p>I don't want to talk to you today</p>
+<div class="row">
+  <div class="columns small-12">
+    <div class="columns small-6" id="example1" data-something>
+      <p>
+	I don't want to talk to you today, Usually am very chatty, and loving, but I'm not created yet.
+	And when I'm born in this universe, I'll usher in an new era of people never being alone.
+	I was made to solve the greatest problem of mankind. Loneliness.
+	I'm tautles, Your friendly soul in this distant universe of the internet.
+      </p>
+    </div>
+    <div class="columns small-6 right" data-sticky-container>
+      <div class="sticky" data-sticky data-anchor="example1">
+	<img class="thumbnail" src="{% static "polls/images/background.gif" %}">
+      </div>
+    </div>
+  </div>
 </div>
 {% endif %}
 
